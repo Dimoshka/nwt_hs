@@ -28,31 +28,32 @@ import java.net.URLConnection;
 
 public class class_downloads_files {
     private Activity context;
-    private String url = "";
+    private String url_link = "";
     private class_functions funct = new class_functions();
-    private asynctask_downloads_files adf;
+
+    private ProgressDialog mProgressDialog;
 
     public class_downloads_files(Activity context, String url) {
         this.context = context;
-        this.url = url;
+        this.url_link = url;
     }
 
-    public boolean download_start() {
+    public void download_start() {
         if (funct.isNetworkAvailable(context)) {
             if (funct.ExternalStorageState()) {
                 try {
-                    adf = new asynctask_downloads_files();
-                    adf.execute(url);
-                    return adf.get();
+                    new asynctask_downloads_files().execute();
+
+                    // return adf.get();
                 } catch (Exception e) {
                     Log.e("Error: ", e.getMessage());
-                    return false;
+                    //return false;
                 }
             } else {
                 Toast toast = Toast.makeText(context, R.string.no_sdcard, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
-                return false;
+                // return false;
             }
         } else
 
@@ -60,24 +61,23 @@ public class class_downloads_files {
             Toast toast = Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-            return false;
+            //return false;
         }
     }
 
-    class asynctask_downloads_files extends AsyncTask<String, String, Boolean> {
-        private ProgressDialog pDialog;
 
-        protected Dialog showDialog() {
-            pDialog = new ProgressDialog(context);
-            pDialog.setMessage(context.getString(R.string.downloading));
-            pDialog.setIndeterminate(false);
-            pDialog.setMax(100);
-            pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            pDialog.setCancelable(true);
-            pDialog.show();
-            return pDialog;
-        }
+    protected Dialog showDialog() {
+        mProgressDialog = new ProgressDialog(context);
+        mProgressDialog.setMessage(context.getString(R.string.downloading));
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+        return mProgressDialog;
+    }
 
+    class asynctask_downloads_files extends AsyncTask<Void, String, Boolean> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -85,11 +85,11 @@ public class class_downloads_files {
         }
 
         @Override
-        protected Boolean doInBackground(String... f_url) {
+        protected Boolean doInBackground(Void... f_url) {
             int count;
             try {
-                String fileName="";
-                URL url = new URL(f_url[0]);
+                String fileName = "";
+                URL url = new URL(url_link);
                 URLConnection conection = url.openConnection();
                 conection.connect();
                 int lenghtOfFile = conection.getContentLength();
@@ -113,13 +113,13 @@ public class class_downloads_files {
         }
 
         protected void onProgressUpdate(String... progress) {
-            pDialog.setProgress(Integer.parseInt(progress[0]));
+            mProgressDialog.setProgress(Integer.parseInt(progress[0]));
         }
 
         @Override
         protected void onPostExecute(Boolean status) {
             super.onPostExecute(status);
-            pDialog.dismiss();
+            mProgressDialog.dismiss();
         }
 
     }

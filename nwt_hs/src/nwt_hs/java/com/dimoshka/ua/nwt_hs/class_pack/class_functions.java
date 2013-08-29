@@ -73,6 +73,10 @@ public class class_functions {
     public String get_dir_app(Context context) {
         String dir = Environment.getExternalStorageDirectory() + "/"
                 + context.getResources().getString(R.string.app_dir);
+        File Directory = new File(dir);
+        if (!Directory.isDirectory()) {
+            Directory.mkdirs();
+        }
         return dir;
     }
 

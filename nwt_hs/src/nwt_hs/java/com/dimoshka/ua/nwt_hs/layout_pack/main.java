@@ -14,6 +14,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -47,8 +49,9 @@ public class main extends Activity {
         boolean firstrun = prefs.getBoolean("first_run", true);
         //if (firstrun) {
 
-        language_select();
+        //language_select();
 
+        start_download();
 
         //} else {
 
@@ -64,12 +67,26 @@ public class main extends Activity {
                 prefs.edit().putString("language", lang_arr_val[item]).commit();
                 prefs.edit().putBoolean("first_run", false).commit();
                 dialog.dismiss();
-                start_download();
+                hnd.sendEmptyMessage(1);
             }
         });
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+
+    private final Handler hnd = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    start_download();
+                    break;
+            }
+        }
+    };
+
+
 
 
     private void start_download() {
