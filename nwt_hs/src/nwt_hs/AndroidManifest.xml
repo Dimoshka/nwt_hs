@@ -25,7 +25,7 @@
             android:allowBackup="true"
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light">
+            android:theme="@android:style/Theme.Holo">
         <activity
                 android:name="com.dimoshka.ua.nwt_hs.layout_pack.main"
                 android:configChanges="orientation|keyboardHidden|screenSize"
@@ -36,6 +36,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dimoshka.ua.nwt_hs.layout_pack.preferences"
+            android:label="@string/preference"
+            >
         </activity>
     </application>
 

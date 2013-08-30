@@ -95,7 +95,7 @@ public class class_functions {
                                Activity activity) {
         Cursor cursor;
         if (id == 0) {
-            cursor = database.rawQuery("SELECT * from language where code_an='"
+            cursor = database.rawQuery("SELECT * from languages where iso_code='"
                     + Locale.getDefault().getLanguage() + "'", null);
             cursor.moveToFirst();
             if (cursor.getCount() > 0) {
@@ -106,7 +106,7 @@ public class class_functions {
                         .commit();
             }
         } else {
-            cursor = database.rawQuery("SELECT * from language where _id='" + id
+            cursor = database.rawQuery("SELECT * from languages where _id='" + id
                     + "'", null);
         }
         return cursor;

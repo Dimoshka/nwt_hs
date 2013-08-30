@@ -14,9 +14,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class class_linck {
 
-    static final String URL_Bible = "http://www.jw.org/apps/E_TRGCHlZRQVNYVrXF?fileformat=PDF&output=html&pub=nwt&langwritten=%s";
+    static final String URL_Bible = "http://www.jw.org/apps/E_TRGCHlZRQVNYVrXF?fileformat=EPUB&output=html&pub=nwt&langwritten=%s";
     // http://www.jw.org/download/?fileformat=PDF&output=html&pub=nwt&langwritten=U
-    // http://www.jw.org/apps/E_TRGCHlZRQVNYVrXF?fileformat=PDF&output=html&pub=nwt&langwritten=%s
+    // http://www.jw.org/apps/E_TRGCHlZRQVNYVrXF?fileformat=EPUB&output=html&pub=nwt&langwritten=E
 
     private SQLiteDatabase database;
     private class_functions funct = new class_functions();

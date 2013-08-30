@@ -8,20 +8,79 @@
 
 package com.dimoshka.ua.nwt_hs.layout_pack;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceScreen;
+import android.util.Log;
 
 import com.dimoshka.ua.nwt_hs.R;
+import com.dimoshka.ua.nwt_hs.class_pack.class_sqlite;
 
 public class preferences extends PreferenceActivity {
 
+    private static SQLiteDatabase database;
+    private static class_sqlite dbOpenHelper;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //addPreferencesFromResource(R.xml.preferences);
-        PreferenceManager.setDefaultValues(preferences.this, R.xml.preferences,
-                true);
+        dbOpenHelper = new class_sqlite(this);
+        database = dbOpenHelper.openDataBase();
+        setPreferenceScreen(createPreferenceHierarchy());
     }
 
+    private PreferenceScreen createPreferenceHierarchy() {
+        try {
+
+            PreferenceScreen root = getPreferenceManager().createPreferenceScreen(this);
+            PreferenceCategory dialogBasedPrefCat = new PreferenceCategory(this);
+            dialogBasedPrefCat.setTitle(R.string.intetface);
+            root.addPreference(dialogBasedPrefCat);
+
+            Cursor c = database.rawQuery("SELECT * from languages order by `name_english`", null);
+            int count = c.getCount();
+            CharSequence[] entries = new CharSequence[count];
+            CharSequence[] entryValues = new CharSequence[count];
+
+            c.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                entries[i] = c.getString(c.getColumnIndexOrThrow("name"));
+                entryValues[i] = c.getString(c.getColumnIndexOrThrow("_id"));
+                c.moveToNext();
+            }
+            c.close();
+
+            ListPreference list_p = new ListPreference(this);
+            list_p.setEntries(entries);
+            list_p.setEntryValues(entryValues);
+            list_p.setDefaultValue(1);
+            list_p.setDialogTitle(R.string.language);
+            list_p.setKey("language");
+            list_p.setTitle(R.string.language);
+            list_p.setSummary(R.string.language_summary);
+            dialogBasedPrefCat.addPreference(list_p);
+
+
+            dialogBasedPrefCat = new PreferenceCategory(this);
+            dialogBasedPrefCat.setTitle(R.string.management);
+            root.addPreference(dialogBasedPrefCat);
+            CheckBoxPreference checkbox_p = new CheckBoxPreference(this);
+            checkbox_p.setDefaultValue(true);
+            checkbox_p.setKey("analytics");
+            checkbox_p.setTitle(R.string.analytics);
+            checkbox_p.setSummary(R.string.analytics_summary);
+            dialogBasedPrefCat.addPreference(checkbox_p);
+
+            return root;
+
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+            return null;
+        }
+    }
 }

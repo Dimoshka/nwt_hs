@@ -12,32 +12,12 @@
     <string name="db_version">"3"</string>
     <string name="app_dir">"NWT"</string>
 
-    <string-array name="language_arr">
-        <item>English</item>
-        <item>French</item>
-        <item>Русский</item>
-        <item>Українська</item>
-        <item>Deutsch</item>
-        <item>Spanish</item>
-        <item>漢語繁體字</item>
-        <item>汉语简化字</item>
-    </string-array>
-    <string-array name="language_arr_value">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-    </string-array>
-
     <string name="app_name">"NWT of the Holy Scriptures"</string>
     <string name="app_name_shot">"NWT_HS"</string>
     <string name="description">"NWT_HS"</string>
 
     <string name="downloading">"Downloading file. Please wait..."</string>
+    <string name="unziping">"Unzip file. Please wait..."</string>
     <string name="no_sdcard">"There is no access to the SDCARD"</string>
     <string name="no_internet">"There is no connection to the Internet"</string>
     <string name="first_run_title">"First run"</string>
@@ -48,4 +28,8 @@
     <string name="management">"Management"</string>
     <string name="analytics">"Reporting"</string>
     <string name="analytics_summary">"Allow to automatically send reports on the application?"</string>
+    <string name="exit">"Exit"</string>
+    <string name="preference">"Preference"</string>
+
+
 </resources>

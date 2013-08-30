@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -30,12 +31,13 @@ public class class_downloads_files {
     private Activity context;
     private String url_link = "";
     private class_functions funct = new class_functions();
-
     private ProgressDialog mProgressDialog;
+    Handler hnd;
 
-    public class_downloads_files(Activity context, String url) {
+    public class_downloads_files(Activity context, String url, Handler hnd) {
         this.context = context;
         this.url_link = url;
+        this.hnd = hnd;
     }
 
     public void download_start() {
@@ -43,7 +45,6 @@ public class class_downloads_files {
             if (funct.ExternalStorageState()) {
                 try {
                     new asynctask_downloads_files().execute();
-
                     // return adf.get();
                 } catch (Exception e) {
                     Log.e("Error: ", e.getMessage());
@@ -77,7 +78,7 @@ public class class_downloads_files {
         return mProgressDialog;
     }
 
-    class asynctask_downloads_files extends AsyncTask<Void, String, Boolean> {
+    class asynctask_downloads_files extends AsyncTask<Void, Long, Boolean> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -99,7 +100,7 @@ public class class_downloads_files {
                 long total = 0;
                 while ((count = input.read(data)) != -1) {
                     total += count;
-                    publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                    publishProgress((total * 100) / lenghtOfFile);
                     output.write(data, 0, count);
                 }
                 output.flush();
@@ -112,14 +113,15 @@ public class class_downloads_files {
             }
         }
 
-        protected void onProgressUpdate(String... progress) {
-            mProgressDialog.setProgress(Integer.parseInt(progress[0]));
+        protected void onProgressUpdate(Integer... progress) {
+            mProgressDialog.setProgress(progress[0]);
         }
 
         @Override
         protected void onPostExecute(Boolean status) {
             super.onPostExecute(status);
             mProgressDialog.dismiss();
+            hnd.sendEmptyMessage(2);
         }
 
     }
