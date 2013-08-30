@@ -1,9 +1,6 @@
+
 /*
- * Copyright (c) 2013. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
+ * Copyright (c) 2013.
  */
 
 package com.dimoshka.ua.nwt_hs.layout_pack;
@@ -42,7 +39,7 @@ public class preferences extends PreferenceActivity {
             dialogBasedPrefCat.setTitle(R.string.intetface);
             root.addPreference(dialogBasedPrefCat);
 
-            Cursor c = database.rawQuery("SELECT * from languages order by `name_english`", null);
+            Cursor c = database.rawQuery("SELECT * from languages order by `name_english`;", null);
             int count = c.getCount();
             CharSequence[] entries = new CharSequence[count];
             CharSequence[] entryValues = new CharSequence[count];

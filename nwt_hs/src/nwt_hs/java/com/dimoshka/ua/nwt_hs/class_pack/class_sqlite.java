@@ -1,9 +1,5 @@
 /*
- * Copyright (c) 2013. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
+ * Copyright (c) 2013.
  */
 
 package com.dimoshka.ua.nwt_hs.class_pack;
@@ -75,6 +71,14 @@ public class class_sqlite extends SQLiteOpenHelper {
             database.execSQL("INSERT INTO [languages] ([_id], [code], [iso_code], [name_english], [name]) VALUES (35, 'EW', 'ee', 'Ewe', 'Ewe');");
             database.execSQL("INSERT INTO [languages] ([_id], [code], [iso_code], [name_english], [name]) VALUES (36, 'L', 'lt', 'Lithuanian', 'Lietuvių');");
 
+            // -- Table: books
+            database.execSQL("CREATE TABLE books (_id INTEGER PRIMARY KEY AUTOINCREMENT, language INTEGER NOT NULL, name VARCHAR(20) NOT NULL, name_shot VARCHAR(6) NOT NULL);");
+            // -- Table: chapters
+            database.execSQL("CREATE TABLE chapters (_id INTEGER PRIMARY KEY AUTOINCREMENT, book INTEGER NOT NULL, name VARCHAR(5) NOT NULL);");
+            // -- Table: text
+            database.execSQL("CREATE TABLE text (_id INTEGER PRIMARY KEY AUTOINCREMENT, chapter INTEGER NOT NULL, name VARCHAR(5) NOT NULL, link TEXT NOT NULL);");
+            // -- Table: content
+            database.execSQL("CREATE TABLE content (_id INTEGER PRIMARY KEY AUTOINCREMENT, chapter INTEGER NOT NULL, body TEXT NOT NULL);");
 
         } catch (Exception ex) {
             funct.send_bug_report(context, ex, getClass().getName(), 63);

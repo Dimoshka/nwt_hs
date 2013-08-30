@@ -1,9 +1,6 @@
+
 /*
- * Copyright (c) 2013. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
+ * Copyright (c) 2013.
  */
 
 package com.dimoshka.ua.nwt_hs.layout_pack;
@@ -65,8 +62,7 @@ public class main extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.language_summary);
 
-
-        Cursor c = database.rawQuery("SELECT * from languages order by `name_english`", null);
+        Cursor c = database.rawQuery("SELECT * from languages order by `name_english`;", null);
         int count = c.getCount();
         final CharSequence[] entries = new CharSequence[count];
         final CharSequence[] entryValues = new CharSequence[count];
@@ -80,7 +76,6 @@ public class main extends Activity {
         c.close();
         builder.setItems(entries, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                //String[] lang_arr_val = getResources().getStringArray(R.array.language_arr_value);
                 prefs.edit().putString("language", entryValues[item].toString()).commit();
                 prefs.edit().putBoolean("first_run", false).commit();
                 dialog.dismiss();
@@ -158,6 +153,4 @@ public class main extends Activity {
             EasyTracker.getInstance().activityStop(this);
         }
     }
-
-
 }
