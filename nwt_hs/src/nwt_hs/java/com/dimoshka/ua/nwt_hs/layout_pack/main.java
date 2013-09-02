@@ -135,7 +135,8 @@ public class main extends Activity {
 
     private void start_parsing() {
         class_unzip unzip = new class_unzip(this, hnd);
-        unzip.unzip(funct.get_dir_app(this) + "/temp.zip", funct.get_dir_app(this) + "/bible/");
+        String code_lng = funct.get_language_code(this, database, Integer.parseInt(prefs.getString("language", "1")));
+        unzip.unzip(funct.get_dir_app(this) + "/temp.zip", funct.get_dir_app(this) + "/" + code_lng + "/");
     }
 
     @Override

@@ -1,9 +1,5 @@
 /*
- * Copyright (c) 2013. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
+ * Copyright (c) 2013.
  */
 
 package com.dimoshka.ua.nwt_hs.class_pack;
@@ -110,6 +106,16 @@ public class class_functions {
                     + "'", null);
         }
         return cursor;
+    }
+
+    public String get_language_code(Activity activity, SQLiteDatabase database, int id) {
+        String code_lng = "E";
+        Cursor cursor = get_language(database, id, activity);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            code_lng = cursor.getString(cursor.getColumnIndex("code"));
+        }
+        return code_lng;
     }
 
     public void update_file_isn(SQLiteDatabase database, String name,
