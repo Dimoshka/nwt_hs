@@ -1,27 +1,68 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
-    }
-}
 apply plugin: 'android'
+
 
 repositories {
     mavenCentral()
+    maven {
+        url "http://www.bugsense.com/gradle/"
+    }
 }
+
 
 android {
     compileSdkVersion 17
-    buildToolsVersion "17"
+    buildToolsVersion "19.0.3"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 16
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+
+
+
+    signingConfigs {
+        release {
+            keyAlias 'card_territory'
+            keyPassword 'Dimoshka9101'
+            storeFile file('Z:/Work/Android/Keystore/dimoshka.keystore')
+            //storeFile file('/media/Files/Work/Android/Keystore/dimoshka.keystore')
+            storePassword 'Dimoshka9101'
+        }
+        debug {
+            keyAlias 'debug'
+            keyPassword '12345678'
+            storeFile file('Z:/Work/Android/Keystore/debug.keystore')
+            //storeFile file('/media/Files/Work/Android/Keystore/debug.keystore')
+            storePassword '12345678'
+        }
+    }
+
+    buildTypes {
+        buildTypes {
+            release {
+
+                debuggable false
+                runProguard true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+                signingConfig signingConfigs.release
+            }
+            debug {
+                debuggable true
+                runProguard false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+                signingConfig signingConfigs.debug
+            }
+        }
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:13.0.+'
+    compile 'com.google.android.gms:play-services:+'
+    compile 'com.android.support:gridlayout-v7:+'
+    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:appcompat-v7:+'
+    compile "com.bugsense.trace:bugsense:3.6"
+    compile files('libs/libGoogleAnalyticsServices.jar')
 }
